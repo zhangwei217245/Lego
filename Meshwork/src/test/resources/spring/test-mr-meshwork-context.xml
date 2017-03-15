@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:p="http://www.springframework.org/schema/p"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+          http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+          ">
+
+    <import resource="classpath*:spring/mr-x-commons-context.xml" />
+    <!-- TODO: to be removed if tested ok -->
+    <!--<import resource="classpath*:spring/apollo-favorite-context.xml" />-->
+    <!--<import resource="classpath*:spring/apollo-notification-context.xml" />-->
+    <!--注解配置-->
+    <context:annotation-config/>
+    <context:component-scan base-package="mr.x.meshwork.*"/>
+    
+    <bean id="mysqlFolloweesTestingSharding" class="mr.x.meshwork.edge.sharding.MysqlTestingSharding"
+          p:bizName="testfollowees" p:legoModule="TEST" p:jdbcTemplateFactory-ref="jdbcTemplateFactory"/>
+
+    <bean id="redisFolloweesTestingSharding" class="mr.x.meshwork.edge.sharding.RedisTestingSharding"
+          p:bizName="testfollowees" p:legoModule="TEST" p:jdbcTemplateFactory-ref="jdbcTemplateFactory"/>
+
+    <bean id="redisFolloweesDao" class="mr.x.meshwork.edge.redis.RedisGraphDaoImpl" init-method="init"
+          p:shardingPolicy-ref="redisFolloweesTestingSharding"/>
+    
+    <bean id="mysqlFolloweesDao" class="mr.x.meshwork.edge.mysql.MysqlGraphDaoImpl" init-method="init"
+          p:shardingPolicy-ref="mysqlFolloweesTestingSharding"/>
+
+    <bean id="hybridFolloweesStorage" class="mr.x.meshwork.edge.HybridGraphStorage" init-method="init"
+          p:mysqlDao-ref="mysqlFolloweesDao" p:redisDao-ref="redisFolloweesDao"/>
+    
+</beans>

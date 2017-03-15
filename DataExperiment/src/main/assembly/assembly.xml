@@ -1,0 +1,82 @@
+<assembly>
+    <id>bin</id>
+    <!-- Specifies that our binary distribution is a zip package -->
+    <formats>
+        <format>zip</format>
+        <format>tar.gz</format>
+    </formats>
+
+    <!-- Adds the dependencies of our application to the lib directory -->
+    <dependencySets>
+        <dependencySet>
+            <!--
+                Project artifact is not copied under library directory since
+                it is added to the root directory of the zip package.
+            -->
+            <useProjectArtifact>false</useProjectArtifact>
+            <outputDirectory>lib</outputDirectory>
+            <unpack>false</unpack>
+        </dependencySet>
+    </dependencySets>
+
+    <fileSets>
+        <!--
+            Adds startup scripts to the root directory of zip package. The startup
+            scripts are copied from the src/main/scripts directory.
+        -->
+        <fileSet>
+            <directory>${project.build.scriptSourceDirectory}</directory>
+            <outputDirectory>bin</outputDirectory>
+            <includes>
+                <include>*.sh</include>
+            </includes>
+            <excludes/>
+            <fileMode>755</fileMode>
+            <directoryMode>755</directoryMode>
+            <lineEnding>keep</lineEnding>
+            <filtered>false</filtered>
+        </fileSet>
+        <!--
+            Adds the jar file of our example application to the root directory
+            of the created zip package.
+        -->
+        <fileSet>
+            <outputDirectory>lib</outputDirectory>
+            <directory>${project.build.directory}</directory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet>
+
+        <!-- -->
+        <fileSet>
+            <outputDirectory>conf</outputDirectory>
+            <fileMode>755</fileMode>
+            <directoryMode>755</directoryMode>
+            <directory>
+                src/main/resources
+            </directory>
+            <excludes>
+                <exclude>log4j.properties</exclude>
+            </excludes>
+            <lineEnding>keep</lineEnding>
+            <filtered>false</filtered>
+        </fileSet>
+        
+        <fileSet>
+            <outputDirectory>logs</outputDirectory>
+            <includes/>
+            <excludes>
+                <exclude>*.*</exclude>
+            </excludes>
+            <fileMode>755</fileMode>
+            <directoryMode>755</directoryMode>
+            <directory>
+                src/main/assembly
+            </directory>
+            <lineEnding>keep</lineEnding>
+            <filtered>false</filtered>
+        </fileSet>
+    </fileSets>
+
+</assembly>

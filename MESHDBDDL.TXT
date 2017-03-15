@@ -1,0 +1,275 @@
+MESHDBDDL.TXT
+
+./scripts/mysql_install_db --user=zhang56 --ldata=var/lib/mysql3306/ --builddir=../../mysql-5.6.24/ --defaults-file=etc/3306.cnf
+./scripts/mysql_install_db --user=zhang56 --ldata=var/lib/mysql3307/ --builddir=../../mysql-5.6.24/ --defaults-file=etc/3307.cnf
+./scripts/mysql_install_db --user=zhang56 --ldata=var/lib/mysql3308/ --builddir=../../mysql-5.6.24/ --defaults-file=etc/3308.cnf
+./scripts/mysql_install_db --user=zhang56 --ldata=var/lib/mysql3309/ --builddir=../../mysql-5.6.24/ --defaults-file=etc/3309.cnf
+
+
+./mysqld_safe --defaults-file=/home/zhang56/binary/mysql/etc/3306.cnf --user=zhang56
+./mysqld_safe --defaults-file=/home/zhang56/binary/mysql/etc/3307.cnf --user=zhang56
+./mysqld_safe --defaults-file=/home/zhang56/binary/mysql/etc/3308.cnf --user=zhang56
+./mysqld_safe --defaults-file=/home/zhang56/binary/mysql/etc/3309.cnf --user=zhang56
+
+
+CREATE USER 'root'@'localhost' IDENTIFIED BY 'root';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost' WITH GRANT OPTION;
+
+CREATE USER 'root'@'%' IDENTIFIED BY 'root';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+
+CREATE USER 'zhang56'@'%' IDENTIFIED BY 'zhang56';
+GRANT ALL PRIVILEGES ON *.* TO 'zhang56'@'%' WITH GRANT OPTION;
+====================================================================================
+
+DROP DATABASE meshwork_0;
+
+CREATE DATABASE meshwork_0 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+use meshwork_0;
+
+CREATE TABLE IF NOT EXISTS `meshwork_0`.`edge_meshwork_0` (
+  `source_id` bigint(20) NOT NULL COMMENT 'user_id',
+  `updated_at` bigint(20) NOT NULL DEFAULT '0',
+  `destination_id` bigint(20) NOT NULL COMMENT 'feed_id',
+  `state` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 deleted\n1 normal',
+  `position` int(11) NOT NULL DEFAULT '0',
+  `category` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'feed_type',
+  `criterion` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `accessory_id` bigint(20) NOT NULL DEFAULT '0',
+  `ext_info` varbinary(6000) DEFAULT NULL,
+  PRIMARY KEY (`source_id`,`destination_id`),
+  KEY `idx_state_cate_criterion_accessoryid` (`state`,`category`,`criterion`,`accessory_id`),
+  KEY `idx_update` (`updated_at`),
+  KEY `idx_position` (`position`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `meshwork_0`.`meta_edge_meshwork_0` (
+  `source_id` bigint(20) NOT NULL,
+  `count` int(11) NOT NULL,
+  `state` tinyint(4) NOT NULL,
+  `updated_at` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`source_id`),
+  KEY `idx_updated_at_state_count` (`updated_at`,`state`,`count`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `meshwork_0`.`edge_meshwork_1` (
+  `source_id` bigint(20) NOT NULL COMMENT 'user_id',
+  `updated_at` bigint(20) NOT NULL DEFAULT '0',
+  `destination_id` bigint(20) NOT NULL COMMENT 'feed_id',
+  `state` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 deleted\n1 normal',
+  `position` int(11) NOT NULL DEFAULT '0',
+  `category` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'feed_type',
+  `criterion` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `accessory_id` bigint(20) NOT NULL DEFAULT '0',
+  `ext_info` varbinary(6000) DEFAULT NULL,
+  PRIMARY KEY (`source_id`,`destination_id`),
+  KEY `idx_state_cate_criterion_accessoryid` (`state`,`category`,`criterion`,`accessory_id`),
+  KEY `idx_update` (`updated_at`),
+  KEY `idx_position` (`position`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `meshwork_0`.`meta_edge_meshwork_1` (
+  `source_id` bigint(20) NOT NULL,
+  `count` int(11) NOT NULL,
+  `state` tinyint(4) NOT NULL,
+  `updated_at` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`source_id`),
+  KEY `idx_updated_at_state_count` (`updated_at`,`state`,`count`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP DATABASE meshwork_1;
+
+CREATE DATABASE meshwork_1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+use meshwork_1;
+
+CREATE TABLE IF NOT EXISTS `meshwork_1`.`edge_meshwork_0` (
+  `source_id` bigint(20) NOT NULL COMMENT 'user_id',
+  `updated_at` bigint(20) NOT NULL DEFAULT '0',
+  `destination_id` bigint(20) NOT NULL COMMENT 'feed_id',
+  `state` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 deleted\n1 normal',
+  `position` int(11) NOT NULL DEFAULT '0',
+  `category` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'feed_type',
+  `criterion` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `accessory_id` bigint(20) NOT NULL DEFAULT '0',
+  `ext_info` varbinary(6000) DEFAULT NULL,
+  PRIMARY KEY (`source_id`,`destination_id`),
+  KEY `idx_state_cate_criterion_accessoryid` (`state`,`category`,`criterion`,`accessory_id`),
+  KEY `idx_update` (`updated_at`),
+  KEY `idx_position` (`position`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `meshwork_1`.`meta_edge_meshwork_0` (
+  `source_id` bigint(20) NOT NULL,
+  `count` int(11) NOT NULL,
+  `state` tinyint(4) NOT NULL,
+  `updated_at` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`source_id`),
+  KEY `idx_updated_at_state_count` (`updated_at`,`state`,`count`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `meshwork_1`.`edge_meshwork_1` (
+  `source_id` bigint(20) NOT NULL COMMENT 'user_id',
+  `updated_at` bigint(20) NOT NULL DEFAULT '0',
+  `destination_id` bigint(20) NOT NULL COMMENT 'feed_id',
+  `state` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 deleted\n1 normal',
+  `position` int(11) NOT NULL DEFAULT '0',
+  `category` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'feed_type',
+  `criterion` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `accessory_id` bigint(20) NOT NULL DEFAULT '0',
+  `ext_info` varbinary(6000) DEFAULT NULL,
+  PRIMARY KEY (`source_id`,`destination_id`),
+  KEY `idx_state_cate_criterion_accessoryid` (`state`,`category`,`criterion`,`accessory_id`),
+  KEY `idx_update` (`updated_at`),
+  KEY `idx_position` (`position`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `meshwork_1`.`meta_edge_meshwork_1` (
+  `source_id` bigint(20) NOT NULL,
+  `count` int(11) NOT NULL,
+  `state` tinyint(4) NOT NULL,
+  `updated_at` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`source_id`),
+  KEY `idx_updated_at_state_count` (`updated_at`,`state`,`count`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+DROP DATABASE meshwork_2;
+
+CREATE DATABASE meshwork_2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+use meshwork_2;
+
+CREATE TABLE IF NOT EXISTS `meshwork_2`.`edge_meshwork_0` (
+  `source_id` bigint(20) NOT NULL COMMENT 'user_id',
+  `updated_at` bigint(20) NOT NULL DEFAULT '0',
+  `destination_id` bigint(20) NOT NULL COMMENT 'feed_id',
+  `state` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 deleted\n1 normal',
+  `position` int(11) NOT NULL DEFAULT '0',
+  `category` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'feed_type',
+  `criterion` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `accessory_id` bigint(20) NOT NULL DEFAULT '0',
+  `ext_info` varbinary(6000) DEFAULT NULL,
+  PRIMARY KEY (`source_id`,`destination_id`),
+  KEY `idx_state_cate_criterion_accessoryid` (`state`,`category`,`criterion`,`accessory_id`),
+  KEY `idx_update` (`updated_at`),
+  KEY `idx_position` (`position`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `meshwork_2`.`meta_edge_meshwork_0` (
+  `source_id` bigint(20) NOT NULL,
+  `count` int(11) NOT NULL,
+  `state` tinyint(4) NOT NULL,
+  `updated_at` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`source_id`),
+  KEY `idx_updated_at_state_count` (`updated_at`,`state`,`count`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `meshwork_2`.`edge_meshwork_1` (
+  `source_id` bigint(20) NOT NULL COMMENT 'user_id',
+  `updated_at` bigint(20) NOT NULL DEFAULT '0',
+  `destination_id` bigint(20) NOT NULL COMMENT 'feed_id',
+  `state` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 deleted\n1 normal',
+  `position` int(11) NOT NULL DEFAULT '0',
+  `category` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'feed_type',
+  `criterion` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `accessory_id` bigint(20) NOT NULL DEFAULT '0',
+  `ext_info` varbinary(6000) DEFAULT NULL,
+  PRIMARY KEY (`source_id`,`destination_id`),
+  KEY `idx_state_cate_criterion_accessoryid` (`state`,`category`,`criterion`,`accessory_id`),
+  KEY `idx_update` (`updated_at`),
+  KEY `idx_position` (`position`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `meshwork_2`.`meta_edge_meshwork_1` (
+  `source_id` bigint(20) NOT NULL,
+  `count` int(11) NOT NULL,
+  `state` tinyint(4) NOT NULL,
+  `updated_at` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`source_id`),
+  KEY `idx_updated_at_state_count` (`updated_at`,`state`,`count`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+DROP DATABASE meshwork_3;
+
+CREATE DATABASE meshwork_3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+use meshwork_3;
+
+CREATE TABLE IF NOT EXISTS `meshwork_3`.`edge_meshwork_0` (
+  `source_id` bigint(20) NOT NULL COMMENT 'user_id',
+  `updated_at` bigint(20) NOT NULL DEFAULT '0',
+  `destination_id` bigint(20) NOT NULL COMMENT 'feed_id',
+  `state` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 deleted\n1 normal',
+  `position` int(11) NOT NULL DEFAULT '0',
+  `category` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'feed_type',
+  `criterion` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `accessory_id` bigint(20) NOT NULL DEFAULT '0',
+  `ext_info` varbinary(6000) DEFAULT NULL,
+  PRIMARY KEY (`source_id`,`destination_id`),
+  KEY `idx_state_cate_criterion_accessoryid` (`state`,`category`,`criterion`,`accessory_id`),
+  KEY `idx_update` (`updated_at`),
+  KEY `idx_position` (`position`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `meshwork_3`.`meta_edge_meshwork_0` (
+  `source_id` bigint(20) NOT NULL,
+  `count` int(11) NOT NULL,
+  `state` tinyint(4) NOT NULL,
+  `updated_at` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`source_id`),
+  KEY `idx_updated_at_state_count` (`updated_at`,`state`,`count`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `meshwork_3`.`edge_meshwork_1` (
+  `source_id` bigint(20) NOT NULL COMMENT 'user_id',
+  `updated_at` bigint(20) NOT NULL DEFAULT '0',
+  `destination_id` bigint(20) NOT NULL COMMENT 'feed_id',
+  `state` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0 deleted\n1 normal',
+  `position` int(11) NOT NULL DEFAULT '0',
+  `category` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'feed_type',
+  `criterion` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `accessory_id` bigint(20) NOT NULL DEFAULT '0',
+  `ext_info` varbinary(6000) DEFAULT NULL,
+  PRIMARY KEY (`source_id`,`destination_id`),
+  KEY `idx_state_cate_criterion_accessoryid` (`state`,`category`,`criterion`,`accessory_id`),
+  KEY `idx_update` (`updated_at`),
+  KEY `idx_position` (`position`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS `meshwork_3`.`meta_edge_meshwork_1` (
+  `source_id` bigint(20) NOT NULL,
+  `count` int(11) NOT NULL,
+  `state` tinyint(4) NOT NULL,
+  `updated_at` bigint(20) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`source_id`),
+  KEY `idx_updated_at_state_count` (`updated_at`,`state`,`count`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+mysql -uroot -proot -h10.6.63.236 -P3306  -e 'DROP DATABASE meshwork'
+mysql -uroot -proot -h10.6.61.234 -P3307  -e 'DROP DATABASE meshwork'
+mysql -uroot -proot -h10.6.61.101 -P3308  -e 'DROP DATABASE meshwork'
+mysql -uroot -proot -h10.6.63.236 -P3309  -e 'DROP DATABASE meshwork'
+
+compute-1-20  10.6.63.236 3306
+compute-1-20  10.6.63.236 3309
+
+compute-20-4  10.6.61.234 3307
+compute-1-1   10.6.61.101 3308
+
+
+
+

@@ -1,0 +1,199 @@
+{
+    "configuration": {
+        "status": "info",
+        "name": "Apollo_log",
+        "properties": {
+            "property": {
+                "name": "filename",
+                "value": "/Users/zhangwei/Downloads/apbug"
+            }
+        },
+        "appenders": {
+            "appender": [
+                {
+                    "type": "Console",
+                    "name": "STDOUT",
+                    "PatternLayout": {
+                        "pattern": "%d [%p] %m %throwable [%c] [%t] %X{trace_id}%n"
+                    }
+                },
+                {
+                    "name" : "ApiHttp",
+                    "type" :"RollingFile",
+                    "fileName": "${filename}_http.log",
+                    "filePattern": "${filename}_http_%d{yyyyMMdd-HH-mm}.log.gz",
+                    "immediateFlush": true,
+                    "ThresholdFilter": {
+                        "level": "debug"
+                    },
+                    "PatternLayout": {
+                        "pattern": "%d [%p] %m %throwable [%c] [%t] %X{trace_id}%n"
+                    },
+                    "TimeBasedTriggeringPolicy": {}
+                },
+                {
+                    "name" : "ApiDebug",
+                    "type" :"RollingFile",
+                    "fileName": "${filename}_debug.log",
+                    "filePattern": "${filename}_debug_%d{yyyy-MM-dd_HH_mm}.log.gz",
+                    "immediateFlush": true,
+                    "ThresholdFilter": {
+                        "level": "debug"
+                    },
+                    "PatternLayout": {
+                        "pattern": "%d [%p] %m %throwable [%c] [%t] %X{trace_id}%n"
+                    },
+                    "TimeBasedTriggeringPolicy": {}
+                },
+                {
+                    "name" : "ApiInfo",
+                    "type" :"RollingFile",
+                    "fileName": "${filename}_info.log",
+                    "filePattern": "${filename}_info_%d{yyyy-MM-dd_HH_mm}.log.gz",
+                    "immediateFlush": true,
+                    "ThresholdFilter": {
+                        "level": "info"
+                    },
+                    "PatternLayout": {
+                        "pattern": "%d [%p] %m %throwable [%c] [%t] %X{trace_id}%n"
+                    },
+                    "TimeBasedTriggeringPolicy": {}
+                },
+                {
+                    "name" : "ApiError",
+                    "type" :"RollingFile",
+                    "fileName": "${filename}_error.log",
+                    "filePattern": "${filename}_error_%d{yyyy-MM-dd_HH_mm}.log.gz",
+                    "immediateFlush": true,
+                    "ThresholdFilter": {
+                        "level": "error"
+                    },
+                    "PatternLayout": {
+                        "pattern": "%d [%p] %m %throwable [%c] [%t] %X{trace_id}%n"
+                    },
+                    "TimeBasedTriggeringPolicy": {}
+                },
+                {
+                    "name" : "ApiWarn",
+                    "type" :"RollingFile",
+                    "fileName": "${filename}_warn.log",
+                    "filePattern": "${filename}_warn_%d{yyyy-MM-dd_HH}.log.gz",
+                    "immediateFlush": true,
+                    "ThresholdFilter": {
+                        "level": "warn"
+                    },
+                    "PatternLayout": {
+                        "pattern": "%d [%p] %m %throwable [%c] [%t] %X{trace_id}%n"
+                    },
+                    "TimeBasedTriggeringPolicy": {}
+                }
+            ]
+        },
+        "loggers": {
+            "logger": [
+                {
+                    "name": "apollo",
+                    "level": "debug",
+                    "additivity": "false",
+                    "AppenderRef": {
+                        "ref": "ApiDebug"
+                    },
+                    "AppenderRef": {
+                        "ref": "STDOUT"
+                    }
+                },
+                {
+                    "name": "info",
+                    "level": "info",
+                    "additivity": "false",
+                    "AppenderRef": {
+                        "ref": "ApiInfo"
+                    },
+                    "AppenderRef": {
+                        "ref": "STDOUT"
+                    }
+                },
+                {
+                    "name": "error",
+                    "level": "error",
+                    "additivity": "false",
+                    "AppenderRef": {
+                        "ref": "ApiError"
+                    },
+                    "AppenderRef": {
+                        "ref": "STDOUT"
+                    }
+                },
+                {
+                    "name": "warn",
+                    "level": "warn",
+                    "additivity": "false",
+                    "AppenderRef": {
+                        "ref": "ApiWarn"
+                    },
+                    "AppenderRef": {
+                        "ref": "STDOUT"
+                    }
+                },
+                {
+                    "name": "info",
+                    "level": "info",
+                    "additivity": "false",
+                    "AppenderRef": {
+                        "ref": "ApiInfo"
+                    },
+                    "AppenderRef": {
+                        "ref": "STDOUT"
+                    }
+                },
+                {
+                    "name": "http",
+                    "level": "debug",
+                    "additivity": "false",
+                    "AppenderRef": {
+                        "ref": "ApiHttp"
+                    }
+                },
+                {
+                    "name": "testapollo",
+                    "level": "debug",
+                    "additivity": "false",
+                    "AppenderRef": {
+                        "ref": "STDOUT"
+                    }
+                },
+                {
+                    "name": "com",
+                    "level": "info",
+                    "additivity": "false",
+                    "AppenderRef": {
+                        "ref": "STDOUT"
+                    }
+                },
+                {
+                    "name": "org",
+                    "level": "info",
+                    "additivity": "false",
+                    "AppenderRef": {
+                        "ref": "STDOUT"
+                    }
+                },
+                {
+                    "name": "redis",
+                    "level": "info",
+                    "additivity": "false",
+                    "AppenderRef": {
+                        "ref": "STDOUT"
+                    }
+                }
+            ],
+            "root": {
+                "level": "info",
+                "AppenderRef": {
+                    "ref": "STDOUT"
+                }
+            }
+        }
+    }
+
+}

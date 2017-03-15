@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+          http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.3.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--加载配置文件-->
+    <context:property-placeholder location="classpath:commons_config.properties" ignore-unresolvable="true"/>
+
+    <rabbit:connection-factory id="connectionFactory" host="${rabbitmq_server}" port="5672" cache-mode="CONNECTION"
+                               channel-cache-size="25" connection-cache-size="25"
+                               username="${rabbitmq_user}" password="${rabbitmq_pwd}"/>
+
+    <rabbit:admin id="rabbitAdmin" connection-factory="connectionFactory"/>
+
+    <bean id="apolloMessageConverter" class="mr.x.brookside.amqp.converter.LegoMessageConverter"/>
+
+    <rabbit:template id="normalRabbitTemplate" message-converter="apolloMessageConverter"
+                     exchange="Apollo.direct.exchange" connection-factory="connectionFactory" routing-key="normal"/>
+    <rabbit:template id="snsRabbitTemplate" message-converter="apolloMessageConverter" exchange="Apollo.direct.exchange"
+                     connection-factory="connectionFactory" routing-key="SNS"/>
+    
+
+    <bean id="rabbitNormalGateWay" class="mr.x.brookside.amqp.sender.gateway.RabbitNormalGateWay"
+          p:rabbitTemplate-ref="normalRabbitTemplate"
+          p:snsRabbitTemplate-ref="snsRabbitTemplate"/>
+
+    <rabbit:queue id="notification" name="notification" exclusive="false" durable="true" declared-by="rabbitAdmin"
+                  auto-delete="false" auto-declare="true"/>
+    <rabbit:queue id="push" name="push" exclusive="false" durable="true" declared-by="rabbitAdmin" auto-delete="false"
+                  auto-declare="true"/>
+    <rabbit:queue id="biz" name="biz" exclusive="false" durable="true" declared-by="rabbitAdmin" auto-delete="false"
+                  auto-declare="true"/>
+    <rabbit:queue id="SNS" name="SNS" exclusive="false" durable="true" declared-by="rabbitAdmin" auto-delete="false"
+                  auto-declare="true"/>
+
+    <rabbit:direct-exchange name="Apollo.direct.exchange" declared-by="rabbitAdmin" durable="true" auto-delete="false"
+                            auto-declare="true">
+        <rabbit:bindings>
+            <rabbit:binding queue="notification" key="normal"/>
+            <rabbit:binding queue="push" key="normal"/>
+            <rabbit:binding queue="biz" key="normal"/>
+            <rabbit:binding queue="SNS" key="SNS"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+</beans>
