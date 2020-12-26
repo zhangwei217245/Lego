@@ -6,5 +6,5 @@ It includes the following modules:
 
 1. Brookside: Message processing framework for AMQP (specifically RabbitMQ)
 2. Meshwork:  Graph-like data access API for both MySQL and Redis}
-3. Commons:   Several utilities including redis access API providing HA capability for spring redis.
+3. Commons:   Several utilities including redis access API providing HA capability for spring-data-redis.
 
