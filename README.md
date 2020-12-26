@@ -8,3 +8,4 @@ It includes the following modules:
 2. Meshwork:  Graph-like data access API for both MySQL and Redis}
 3. Commons:   Several utilities including redis access API providing HA capability for spring-data-redis.
 4. Sandglass: A simple batch processing framework.
+5. DataExperiment: A sample project showcasing the usage of Sandglass.
